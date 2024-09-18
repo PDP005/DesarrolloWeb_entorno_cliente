@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Peso</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #imagen {
+            display: none;
+            margin-top: 20px;
+            width: 700px; /* Ajusta el tamaño según sea necesario */
+            height: auto;
+            animation: girar 2s linear infinite; /* Animación de giro */
+        }
+
+        @keyframes girar {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Verificador de Peso</h1>
+        <p>Ingrese su peso en kg:</p>
+        <input type="number" id="peso" placeholder="Peso en kg" />
+        <button onclick="verificarPeso()">Enviar</button>
+
+        <div id="resultado">
+            <img id="imagen" src="a.png" alt="Imagen giratoria">
+        </div>
+    </div>
+
+    <script>
+        function verificarPeso() {
+            var peso = document.getElementById('peso').value;
+            var imagen = document.getElementById('imagen');
+            
+            if (peso > 80) {
+                imagen.style.display = 'block'; // Mostrar imagen si el peso es mayor a 80kg
+            } else {
+                imagen.style.display = 'none'; // Ocultar imagen si el peso es menor o igual a 80kg
+            }
+        }
+    </script>
+</body>
+</html>
+
