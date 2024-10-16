@@ -21,7 +21,7 @@ Es una hora que contiene hh:mm:ss (por ej 12:44:21) ^([01]\d|2[0-3])(:[0-5]\d){2
 Es una fecha dd/mm/aaaa     ^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2]\/\d{4})
 Contraseña de exactamente 6 dígitos     ^\d{6}$/
 Contraseña de 6 caracteres con solo dígitos o letras minúsculas     ^[0-9a-z]{6}$
-Contraseña de entre 6 y 8 caracteres entre los que hay al menos 2 letra minúscula y un dígito     ^(?=.*[a-z].*[a-z])(?=.*[0-9])[a-z0-9]{6-8}$
+Contraseña de entre 6 y 8 caracteres entre los que hay al menos 2 letra minúscula y un dígito     ^(?=.*[a-z].*[a-z])(?=.*[0-9])[a-z0-9]{6,8}$
 
 OPCIONAL 
 Implementar las siguientes expresiones regulares:
