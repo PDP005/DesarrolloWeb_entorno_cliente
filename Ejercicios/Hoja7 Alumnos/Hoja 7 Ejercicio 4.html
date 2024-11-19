@@ -29,6 +29,8 @@ body{
 	let fil=4;
 	let tabla=new Array(fil);
 	let tabla2=new Array(fil);
+	const maxFallos = 5; 
+	let fallos = 0;
 
 	function random (){
  		return Math.floor(Math.random()*10);
@@ -61,9 +63,47 @@ body{
 			tablaHTML += "</table>";
 			document.getElementById("tabla").innerHTML = tablaHTML;
         }
-	 //cuando pulsen en los num doble for paar buscar 
-		//si esta volver a pintar la tabla pero en la pos ponerlo 
-		//dividir entre 4 para la fila  
+
+		function actualizarTabla() {
+		let tablaHTML = "<table>";
+		for (let i = 0; i < fil; i++) {
+			tablaHTML += "<tr>";
+			for (let j = 0; j < col; j++) {
+				tablaHTML += `<td>${tabla2[i][j]}</td>`;
+			}
+			tablaHTML += "</tr>";
+		}
+		tablaHTML += "</table>";
+		document.getElementById("tabla").innerHTML = tablaHTML;
+	}
+		function buscar(valor) {
+			if (fallos >= maxFallos) {
+				document.getElementById("div2").innerHTML = `Fallos: ${fallos} / ${maxFallos}`;
+				return;
+		}
+
+		let encontrado = false;
+
+		for (let i = 0; i < fil; i++) {
+			for (let j = 0; j < col; j++) {
+				// Si el número coincide y no ha sido revelado antes
+				if (tabla[i][j] == valor && tabla2[i][j] == '**') {
+					tabla2[i][j] = valor;
+					encontrado = true;
+					actualizarTabla();
+					return; // Revela solo el primer número encontrado y sale
+				}
+			}
+		}
+		if (!encontrado) {
+			fallos++;
+			document.getElementById("div2").innerHTML = `Fallos: ${fallos} / ${maxFallos}`;
+		}
+		if (fallos >= maxFallos) {
+			alert("Has perdido. ¡Intenta de nuevo!");
+		}
+	}
+
  </script>
 <body onload="cargar()">
  
@@ -84,6 +124,7 @@ body{
 
 </div>
 <div id="div2">
+
 </div>
 </body>
 <script type="text/JavaScript">
