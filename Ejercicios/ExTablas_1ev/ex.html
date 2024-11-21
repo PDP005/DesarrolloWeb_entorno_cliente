@@ -5,73 +5,112 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>EXAMEN 1 EVALUACION</title>
-    
+ </head>
 <style type="text/css">
- body{
-	text-align:center;
-    font-family:'Bookman Old Style',Bookman;
-    color:#29220A;
-     }
-table{
-	background-color: #D5DBDB;
-	border: 2pt solid #fbb;;
-	width:520px;
-	text-align: center;
-	margin: auto;
-	box-shadow: 5px 5px 12px #F5F5DC;
-	font-size: 15px;
+	body{
+		text-align:center;
+		font-family:'Bookman Old Style',Bookman;
+		color:#29220A;
+		}
+	table{
+		background-color: #D5DBDB;
+		border: 2pt solid #fbb;;
+		width:520px;
+		text-align: center;
+		margin: auto;
+		box-shadow: 5px 5px 12px #F5F5DC;
+		font-size: 15px;
+		width: auto;
+		}
+	td{
+		width: 40px;
+		height: 50px;
 	}
-td{
-	width: 40px;
-	height: 50px;
-}
-img{	
-	width: 40px;
-}
- #principal{
- 	width:650px;
-	height:800px;
-	margin-left:auto;
-	margin-right:auto;
-	} 
-  .clasetot{
-	background-color: #fdebd0;
-	}  
+	img{	
+		width: 40px;
+	}
+	#principal{
+		width:650px;
+		height:800px;
+		margin-left:auto;
+		margin-right:auto;
+		} 
+	.clasetot{
+		background-color: #fdebd0;
+		}  
 </style>    
 <script>
-var color=Array("#FA5858","#81BEF7","#F3F781","#2EFE2E");
-var fil,col,tabla;
-function iniciar(){
+	var color=Array("#FA5858","#81BEF7","#F3F781","#2EFE2E");
+	var fil,col,tabla;
+	var i=0;
+	function random() {
+	let arraynum=[]
+    let r;
+    do {
+        r = Math.floor(Math.random() * 32) + 1;
+    } while (arraynum.includes(r)); 
+    arraynum.push(r);
+	return r;
 }
-function jugar(){
-}
-function sacarFicha(){
-}
-</script>
-</head>
-<body>
-<h1 id="h1"> Pierde tus fichas! </h1>
-Indica número de jugadores 
-<select id="jug">
-<option value="2"  selected>2</option>
-<option value="3" >3</option>
-<option value="4" >4</option>
-</select>
-</br></br>
-Indica número de fichas 
-<select id="fich">
-<option value="5"  selected>5</option>
-<option value="6" >6</option>
-<option value="7" >7</option>
-<option value="8" >8</option>
-</select>
-<br><br>
-<div id="fichas"></div>
-<br>
-<input type="button" id="sacar" value="Sacar ficha" onclick="sacarFicha()">
-<input type="button" value="Reiniciar" onclick="jugar()">
-<br><br> 
+	function iniciar(){
+		//document.getElementById("h1").style.color=color[0]
+		intervalo= setInterval(() => {
+			document.getElementById("h1").style.color=color[i]
+			i=(i+1)%color.length
+		}, 3000);
+	}
+	function finalizar(q){
+		clearInterval(intervalo)
+	}
+	function jugar(){
+		let tablaHTML = "<table>";
+		let jug=document.getElementById("jug").value
+		let fichas=Number(document.getElementById("fich").value)
+		let ancho=fichas+2
+		alert(ancho)
+		for (let i = 0; i < jug; i++) {
+        tablaHTML += "<tr>";
+        for (let q = 0; q < ancho; q++) {
+			if(q==0){
+				tablaHTML += `<td>Jugador ${i}<td>`;
+			}else if(q==ancho-1){
+				tablaHTML += `<td class="clasetot"> 0 <td>`;
+			}else{
+				tablaHTML += `<td>${random()}</td>`;
+			}
+		}
+        tablaHTML += "</tr>";
+      }
+      tablaHTML += "</table>";
+	  document.getElementById("tabla").innerHTML = tablaHTML;
 
-</body>
-</html>
+	}
+	function sacarFicha(){
+	}
+</script>
+<body onload="iniciar()" >
+	<h1 id="h1" onclick="finalizar(this)"> Pierde tus fichas! </h1>
+	Indica número de jugadores 
+	<select id="jug">
+	<option value="2"  selected>2</option>
+	<option value="3" >3</option>
+	<option value="4" >4</option>
+	</select>
+	</br></br>
+	Indica número de fichas 
+	<select id="fich">
+	<option value="5"  selected>5</option>
+	<option value="6" >6</option>
+	<option value="7" >7</option>
+	<option value="8" >8</option>
+	</select>
+	<br><br>
+	<div id="tabla"></div>
+	<br>
+
+	<input type="button" id="sacar" value="Sacar ficha" onclick="sacarFicha()">
+	<input type="button" value="Reiniciar" onclick="jugar()">
+	<br><br> 
+
+	</body>
 </html>
