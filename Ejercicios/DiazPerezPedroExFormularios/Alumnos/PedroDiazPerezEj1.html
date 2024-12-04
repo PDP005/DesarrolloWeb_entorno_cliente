@@ -22,15 +22,11 @@
 
       function cargarFecha() {
         let dia = new Date();
-        año = dia.getFullYear();
-
-        //REVISAR SACAR SOLO LOS 2 ULTIMOS DIGITOS
-        //alert(año)
-        document.getElementById("fent").value = `${
-          dia.getDate() + 1
-        }//${dia.getMonth()}//24`;
-        //${año}
-
+        año = dia.getFullYear() - 2000;
+        //alert(año);
+        document.getElementById("fent").value = `${dia.getDate() + 1}//${
+          dia.getMonth() + 1
+        }//${año}`;
         cont = 1;
         a = window.setInterval(function () {
           i = "playa" + cont + ".png";
@@ -51,20 +47,33 @@
         }
       }
       function calcular() {
+        /*SI ALGO DA ERROR PONER EL FOCUS */
         const regexFecha =
           /^([1-2][0-9]|[1-9]|3[12])\/\/(1[0-2]|[1-9]|0[1-9])\/\/(24|25)$/;
         let fecha1 = document.getElementById("fent").value;
         let fecha2 = document.getElementById("fsal").value;
         if (!regexFecha.test(fecha1)) {
           alert("esta Mal fecha 1");
+          document.getElementById("fent").focus();
           return;
         }
         if (!regexFecha.test(fecha2)) {
           alert("esta Mal fecha 2");
+          document.getElementById("fsal").focus();
           return;
         }
-        //quitar si saco dias
+        //dia1 = new Date();
+        d2 = fecha2.split("//");
+        // alert(d2[1]);
+        dia2 = new Date(Number(d2[2]) + 2000, d2[1] - 1, d2[0]);
+        alert(fecha2);
+        alert(dia2);
+        // if (dia1 >= dia2) {
+        //   alert("el dia de entrada tiene que ser anterior");
+        //   return;
+        // }
         document.getElementById("noches").value = 5;
+        /*PARA SACAR EL AÑO SIMPLEMENTE -2000*/
         /*
         [d1, m1, a1] = fecha1.split("//");
         [d2, m2, a2] = fecha2.split("//");
@@ -99,8 +108,8 @@
           alert("si tienes descuento tienes q poner code");
           return;
         } else if (
-          codsoc.value.lenght > 9 ||
-          codsoc.value.lenght < 3 ||
+          codsoc.value.length > 9 ||
+          codsoc.value.length < 3 ||
           !regexCode.test(codsoc.value)
         ) {
           alert("el code esta mal");
@@ -134,6 +143,7 @@
         }
         //alert(select.value);
         preciot = precio * ((100 - select.value) / 100);
+        /*SIEMPRE COGE EL SI PQ TIENEN MISMO ID */
         if (document.getElementById("r").value == 1) {
           preciotc = preciot + 30;
         }
@@ -151,13 +161,15 @@
         } else {
           mia = window.open(
             "https://www.booking.com",
-            "mia",
-            "width=300,height=200,top=300,left=500"
+            "_self"
+            /*FALTABA EL _self*/
           );
         }
       }
 
       function comprobarSocio() {
+        /*ESTO ES UN ONPRESS*/
+        /*VALIDAR CON EXPRESION REGULAR */
         const key = event.key;
         if (
           key === "1" ||
@@ -223,6 +235,7 @@
         <option value="10">Socio SOLYPLAYA Oro (10%)</option>
         <option value="20">Socio SOLYPLAYA Premium (20%)</option>
       </select>
+      <!-- es un onkeypress-->
       Código Socio <input type="text" id="socio" onchange="comprobarSocio()" />
       <br />
       Con seguro de cancelación
