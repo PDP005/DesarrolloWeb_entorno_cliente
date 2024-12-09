@@ -22,7 +22,9 @@
         "Wartortle",
         "Blastoise"
       );
-      let dinero = 10000;
+      let dinero = 10;
+      let tiradas = 0;
+      let gananciastotales = 0;
       function cargar() {
         i = 0;
         palabras = new Array(
@@ -41,7 +43,7 @@
           return;
         }
         dinero -= 2;
-
+        tiradas++;
         let tabla = document.getElementById("tabla");
         let fila = document.createElement("tr");
         let numeros = [];
@@ -74,10 +76,12 @@
           if (repetido == 1) {
             cajatexto.textContent = "Premio 5€";
             dinero += 5;
+            gananciastotales += 5;
           }
           if (repetido == 2) {
             cajatexto.textContent = "Premio 10€";
             dinero += 10;
+            gananciastotales += 10;
           }
           cajatexto.className = "clasePremio";
         } else {
@@ -94,8 +98,43 @@
         return Math.floor(Math.random() * 9);
       }
       function borrar() {
-        let filas = document.querySelectorAll("tr");
-        //bucle paar buscar
+        let filas = document.querySelectorAll("#tabla tr");
+        filas.forEach((fi) => {
+          let textoPremio = fi.querySelector("td:last-child").textContent;
+          if (textoPremio == "No premio") {
+            fi.remove();
+          }
+        });
+      }
+      function abrirVentana(x) {
+        mia = window.open(
+          x.value,
+          "_blank",
+          "width=300,height=200,top=200,left=300"
+        );
+      }
+      function ganancias() {
+        //alert(tiradas);
+        mia = window.open(
+          "",
+          "_blank",
+          "width=300,height=200,top=200,left=300"
+        );
+        let gastado = Number(tiradas) * 2;
+        mia.document.write(
+          `<table style="border-collapse: collapse; width: 100%;">
+            <tr>
+              <td style="border: 1px solid black; padding: 5px;">Saldo</td>
+              <td style="border: 1px solid black; padding: 5px;">Gastado</td>
+              <td style="border: 1px solid black; padding: 5px;">Ganado</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 5px;">${dinero}€</td>
+              <td style="border: 1px solid black; padding: 5px;">${gastado}€</td>
+              <td style="border: 1px solid black; padding: 5px;">${gananciastotales}€</td>
+            </tr>
+          </table>`
+        );
       }
     </script>
   </head>
@@ -111,9 +150,9 @@
       <input
         type="button"
         value="http://www.pokemongo.com/es-es/"
-        onclick="window.open(this.value, '_blank')"
+        onclick="abrirVentana(this)"
       />
-      <input type="button" value="GANANCIAS" />
+      <input type="button" value="GANANCIAS" onclick="ganancias()" />
       <br />
       <table id="tabla"></table>
     </div>
