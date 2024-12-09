@@ -1,51 +1,100 @@
 <html>
-	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<link href='http://fonts.googleapis.com/css?family=Kite+One|Cherry+Swash' rel='stylesheet' type='text/css'>
-		<style type='text/css'>
-		
-		body{
-			font-family: 'Kite One', sans-serif;
-		}
-		
-		#div1 {
-			width:250px;
-			margin:auto;
-		}
-		
-		h1{
-			text-align:center;
-			font-size:20pt;
-		}
-		
-		table{
-			background-color: #EFF2FB;
-			text-align:center;
-			width:250px;
-			border: 1px solid #D0A9F5;
-			font-family: 'Cherry Swash', cursive;
-		}
-		
-		.festivo{
-			background-color: #D0A9F5;
-		}
-		
-		td{
-			border: 1px solid #D0A9F5;
-		}
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link
+      href="http://fonts.googleapis.com/css?family=Kite+One|Cherry+Swash"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style type="text/css">
+      body {
+        font-family: "Kite One", sans-serif;
+      }
 
-		</style>
+      #div1 {
+        width: 250px;
+        margin: auto;
+      }
 
+      h1 {
+        text-align: center;
+        font-size: 20pt;
+      }
 
-<script type="text/javascript">
-function cargar(){
-}
-</script>
-</head>
-<body onload="cargar()">
-<h3></h3>
-<br>
-<div id="div1">
-</div>
-</body>
+      table {
+        background-color: #eff2fb;
+        text-align: center;
+        width: 250px;
+        border: 1px solid #d0a9f5;
+        font-family: "Cherry Swash", cursive;
+      }
+
+      .festivo {
+        background-color: #d0a9f5;
+      }
+
+      td {
+        border: 1px solid #d0a9f5;
+      }
+    </style>
+
+    <script type="text/javascript">
+      //FALTA PONER COLORES
+      function cargar() {
+        //para crear cosas de tables tambien puedo hacer una cadena e ir concatenando
+        //ES MAS FÁCIL
+        let año = Number(prompt("Por favor, ingresa un año:", 2022));
+        let fecha = new Date(año, 11, 1);
+        let div = document.getElementById("div1");
+        let tabla = document.createElement("table");
+        let fila = document.createElement("tr");
+        let diasSemana = ["D", "L", "M", "X", "J", "V", "S"];
+        diasSemana.forEach((diaTexto) => {
+          let dia = document.createElement("td");
+          dia.innerHTML = diaTexto;
+          fila.append(dia);
+        });
+        tabla.append(fila);
+        let cont = 1;
+        fila = document.createElement("tr");
+        for (i = 0; i < 7; i++) {
+          dia = document.createElement("td");
+          if (i < fecha.getDay()) {
+            dia.innerHTML = "";
+          } else {
+            dia.innerHTML = cont;
+            cont++;
+          }
+          fila.append(dia);
+        }
+        tabla.append(fila);
+
+        let diasEnMes = 31;
+        let c = 0;
+        for (i = cont; i < diasEnMes; i++) {
+          if (c === 0) {
+            fila = document.createElement("tr"); // Crear una nueva fila para cada semana
+          }
+          dia = document.createElement("td");
+          dia.innerHTML = i;
+          fila.append(dia);
+          c++;
+          if (c === 7) {
+            tabla.append(fila);
+            c = 0;
+          }
+          if (c > 0) {
+            tabla.append(fila);
+          }
+        }
+
+        div.append(tabla);
+      }
+    </script>
+  </head>
+  <body onload="cargar()">
+    <h3></h3>
+    <br />
+    <div id="div1"></div>
+  </body>
 </html>
