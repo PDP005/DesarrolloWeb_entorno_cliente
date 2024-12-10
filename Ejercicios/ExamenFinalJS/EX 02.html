@@ -62,6 +62,7 @@
           if (i < fecha.getDay()) {
             dia.innerHTML = "";
           } else {
+            /*if que si es getday 0 poner la fila especial*/
             dia.innerHTML = cont;
             cont++;
           }
@@ -79,6 +80,7 @@
           dia.innerHTML = i;
           fila.append(dia);
           c++;
+          //if de si la i es uno de los dias festivos colorear
           if (c === 7) {
             tabla.append(fila);
             c = 0;
