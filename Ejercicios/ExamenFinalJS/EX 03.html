@@ -1,82 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>EXAMEN EJERCICIO 1</title>
+    <link rel="stylesheet" href="main.css" />
+    <style type="text/css">
+      body {
+        font-family: Georgia, "Times New Roman", Times, serif;
+      }
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>EXAMEN EJERCICIO 1</title>
-		<link rel="stylesheet" href="main.css">
-<style type="text/css">
- body{
-   font-family: Georgia, "Times New Roman", Times, serif;
- }
-#div1{
-	width:600px;
-	height:450px;
-	margin-left:20px;
-	border: 2px black solid;
-	padding: 20px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	background-color:#EBDEF0  ;
-	}
- .grises {
-     background-color:#BDBDBD;
-	 border-color:black;
-	 }
-}
- </style>
- <body>
- <form name="form">
-<div id="div1">
-<h1>PELUQUERÍA QUÉ PELOS!</h1>
-Estos son nuestras ofertas
-<br><br>
-<input type="checkbox" id="idtinte" >Tinte
- <select id="seltinte">
-<option value>Baño de color</option>
-<option value>Mechas</option>
-</select>
-<br><br>
-<input type="checkbox" id="idcorte"  >Corte
-<select id="selcorte">
-<option value>Flequillo y puntas</option>
-<option value>Cambio total</option>
-</select>
-<br><br>
-<input type="checkbox" id="idpeinar" >Peinar
-<select id="selpeinar">
-<option value>Al aire</option>
-<option value>Alisado</option>
-<option value>Otros</option>
-</select>
-<br><br>
-Seleccionar día
-<select id="dia"> 
-<option value >Seleccione</option>
-<option value >Lunes a Jueves</option>
-<option value >Viernes</option>
-<option value >Sábado o Domingo</option>
-</select>
- Horario 
-<select id="mt">
-<option value >Seleccione</option>
-<option value >Mañana</option>
-<option value >Tarde</option>
-</select>
-<hr>
+      #div1 {
+        width: 600px;
+        height: auto;
+        margin-left: 20px;
+        border: 2px black solid;
+        padding: 20px;
+        background-color: #ebdef0;
+      }
 
-<input type="button" value="Mostrar Precio" onclick="comprobar()" > 
+      .grises {
+        background-color: #bdbdbd;
+        border-color: black;
+      }
+    </style>
+  </head>
 
-<div id="desc">
-<br>
-DESCUENTOS Y PRECIOS
-</div>
-<br> Elija un día para visitarnos (dd/mm/aaaa) <input id="fecha" type="text" size=10>
-<input type="button" value="Mostrar Disponibilidad" > 
- <div>
-</div>
-</form> 
-</body>
-</body>
+  <body>
+    <form name="form">
+      <div id="div1">
+        <h1>PELUQUERÍA QUÉ PELOS!</h1>
+        <p>Estos son nuestras ofertas</p>
+
+        <input type="checkbox" id="idtinte" /> Tinte
+        <select id="seltinte">
+          <option value="20">Baño de color</option>
+          <option value="30">Mechas</option>
+        </select>
+        <br /><br />
+
+        <input type="checkbox" id="idcorte" /> Corte
+        <select id="selcorte">
+          <option value="20">Flequillo y puntas</option>
+          <option value="35">Cambio total</option>
+        </select>
+        <br /><br />
+
+        <input type="checkbox" id="idpeinar" /> Peinar
+        <select id="selpeinar">
+          <option value="10">Al aire</option>
+          <option value="15">Alisado</option>
+          <option value="10">Otros</option>
+        </select>
+        <br /><br />
+
+        <label for="dia">Seleccionar día</label>
+        <select id="dia">
+          <option value="">Seleccione</option>
+          <option value="lunesajueves">Lunes a Jueves</option>
+          <option value="viernes">Viernes</option>
+          <option value="sabadoodomingo">Sábado o Domingo</option>
+        </select>
+
+        <label for="mt">Horario</label>
+        <select id="mt">
+          <option value="">Seleccione</option>
+          <option value="mañana">Mañana</option>
+          <option value="tarde">Tarde</option>
+        </select>
+        <hr />
+
+        <input type="button" value="Mostrar Precio" onclick="comprobar()" />
+
+        <div id="desc">
+          <p>DESCUENTOS Y PRECIOS</p>
+        </div>
+        <br />
+
+        <label for="fecha">Elija un día para visitarnos (dd/mm/aaaa)</label>
+        <input id="fecha" type="text" size="10" />
+        <input
+          type="button"
+          value="Mostrar Disponibilidad"
+          onclick="mostrarDisponibilidad()"
+        />
+      </div>
+    </form>
+
+    <script>
+      function comprobar() {
+        const tinte = document.getElementById("idtinte").checked;
+        const corte = document.getElementById("idcorte").checked;
+        const peinar = document.getElementById("idpeinar").checked;
+
+        const dia = document.getElementById("dia").value;
+        const horario = document.getElementById("mt").value;
+
+        if (!tinte && !corte && !peinar) {
+          alert("Debe seleccionar al menos un servicio.");
+          return;
+        }
+
+        if (dia === "" || horario === "") {
+          alert("Debe seleccionar un día y un horario.");
+          return;
+        }
+
+        let precio = 0;
+
+        if (tinte) {
+          precio += parseInt(document.getElementById("seltinte").value);
+        }
+        if (corte) {
+          precio += parseInt(document.getElementById("selcorte").value);
+        }
+        if (peinar) {
+          precio += parseInt(document.getElementById("selpeinar").value);
+        }
+
+        let descuento = 0;
+        if (dia === "lunesajueves" && horario === "mañana") {
+          descuento = 0.2; // 20% descuento
+        } else if (dia === "viernes" && horario === "mañana") {
+          descuento = 0.15; // 15% descuento
+        }
+
+        const precioFinal = precio - precio * descuento;
+
+        document.getElementById("desc").innerHTML = `
+                <p>Precio sin descuento: €${precio.toFixed(2)}</p>
+                <p>Descuento aplicado: ${(descuento * 100).toFixed(0)}%</p>
+                <p>Precio final: €${precioFinal.toFixed(2)}</p>
+            `;
+      }
+
+      function mostrarDisponibilidad() {
+        const fechaInput = document.getElementById("fecha").value;
+
+        const hoy = new Date();
+        const fechaSeleccionada = new Date(
+          fechaInput.split("/").reverse().join("/")
+        );
+
+        if (isNaN(fechaSeleccionada)) {
+          alert("Por favor, ingrese una fecha válida en formato dd/mm/aaaa.");
+          return;
+        }
+
+        const diferenciaDias = Math.ceil(
+          (fechaSeleccionada - hoy) / (1000 * 60 * 60 * 24)
+        );
+
+        if (diferenciaDias >= 0 && diferenciaDias <= 20) {
+          alert(`Le esperamos dentro de ${diferenciaDias} días.`);
+        } else {
+          alert(
+            "La fecha seleccionada no está dentro del rango de los próximos 20 días."
+          );
+        }
+      }
+    </script>
+  </body>
 </html>
