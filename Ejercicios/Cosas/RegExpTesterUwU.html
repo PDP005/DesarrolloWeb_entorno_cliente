@@ -1,56 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
+    <meta charset="UTF-8" />
+    <title>RegExp Tester</title>
+    <style>
       body {
-        font-family: Arial, Helvetica, sans-serif;
-      }
-      #div1 {
-        width: 900px;
-        height: 370px;
-        margin-left: 20px;
-        border: 2px black solid;
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: auto;
         padding: 20px;
-        padding-top: 0px;
-        padding-bottom: 0px;
+        background-color: #f9f9f9;
+        line-height: 1.6;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #result,
+      #matchVisualization {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
+        overflow-x: auto;
+      }
+
+      .match {
+        background-color: green;
+        color: white;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .non-match {
+        background-color: lightgray;
+        padding: 2px 4px;
+        border-radius: 3px;
       }
     </style>
-    <script>
-      function comprobar() {
-        const tst1 = /^\d{3}\s\d{2}\s\d{2}\s\d{2}$/;
-        if (!regexFecha.test(fecha1)) {
-        }
-      }
-    </script>
   </head>
   <body>
-    <form name="form">
-      <div id="div1">
-        <h1>EXPRESIONES REGULARES</h1>
-        <p>
-          CAMPO 1: <input type="text" id="c1" size="15" /> Empiezo y termino por
-          letra mayúscula y lo demás son números o espacios
-        </p>
-        <p>
-          CAMPO 2: <input type="text" id="c2" size="15" /> Soy como un número de
-          teléfono, cada tres dígitos tengo un guión
-        </p>
-        <p>
-          CAMPO 3: <input type="text" id="c3" size="15" /> Soy un número
-          múltiplo de 10
-        </p>
-        <p>
-          CAMPO 4: <input type="text" id="c4" size="15" /> Tengo alguna letra
-          mayúscula, alguna minúscula y algún dígito. En total, entre 6 y 10
-          caracteres
-        </p>
-        <br />
-        <input type="button" value="Comprobar datos" onclick="comprobar()" />
-        <br />
-        <div id="div2"></div>
-      </div>
-    </form>
+    <h1>RegExp Tester</h1>
+    <input id="pattern" placeholder="Enter RegExp Pattern (e.g. /\\d+/g)" />
+    <input id="testString" placeholder="Enter Test String" />
+    <button id="testBtn">Test</button>
+    <div id="result"></div>
+    <div id="matchVisualization"></div>
+
+    <script>
+      document.getElementById("testBtn").addEventListener("click", function () {
+        const patternInput = document.getElementById("pattern").value;
+        const testString = document.getElementById("testString").value;
+        const resultDiv = document.getElementById("result");
+        const visualDiv = document.getElementById("matchVisualization");
+
+        try {
+          // Parse pattern and flags
+          const matches = patternInput.match(/^\/(.+)\/([gimuy]*)$/);
+          const pattern = matches ? matches[1] : patternInput;
+          const flags = matches ? matches[2] : "g";
+
+          const regex = new RegExp(pattern, flags);
+          const foundMatches = testString.match(regex) || [];
+
+          // Display results
+          resultDiv.innerHTML =
+            `<strong>Matches:</strong> ${foundMatches.length}<br>` +
+            `<strong>Matched Values:</strong> ${foundMatches.join(", ")}`;
+
+          // Visualize matches
+          let visualization = "";
+          let lastIndex = 0;
+          let match;
+          regex.lastIndex = 0;
+
+          while ((match = regex.exec(testString)) !== null) {
+            visualization +=
+              `<span class="non-match">${testString.slice(
+                lastIndex,
+                match.index
+              )}</span>` + `<span class="match">${match[0]}</span>`;
+            lastIndex = regex.lastIndex;
+          }
+
+          visualization += `<span class="non-match">${testString.slice(
+            lastIndex
+          )}</span>`;
+          visualDiv.innerHTML = visualization;
+        } catch (error) {
+          resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+          visualDiv.innerHTML = "";
+        }
+      });
+    </script>
   </body>
 </html>
